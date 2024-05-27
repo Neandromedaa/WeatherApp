@@ -1,0 +1,36 @@
+.main {
+  height: 100vh;
+  position: relative;
+
+  
+}
+.App {
+    background-color: #a3c7e9;
+    display: flex;
+    height: 100%;
+    align-items: center;
+    flex-flow: column;
+    justify-content: center;
+    gap: 3vh
+  }
+  
+.menu {
+  position: absolute;
+}
+
+swiper-container {
+  display: flex;
+  align-items: center;
+  width: min(100vw, 500px);
+  height: 40vh;
+
+}
+
+swiper-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
