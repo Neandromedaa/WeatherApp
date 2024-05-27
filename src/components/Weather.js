@@ -10,17 +10,10 @@ import WbSunnyOutlinedIcon from '@mui/icons-material/WbSunnyOutlined';
 import { Skeleton } from '@mui/material';
 import { useState } from 'react';
 
-// const refresh = () => {
-//     window.location.reload();
-//   }
-
 function Weather({forecast}){
     const [load, setLoad] = useState(false)
     return(
         <div>
-            {/* <IconButton aria-label="refresh" onClick={refresh}>
-                <RefreshIcon/>
-            </IconButton> */}
             <Card
                 sx={{
                     borderRadius: '6%',
