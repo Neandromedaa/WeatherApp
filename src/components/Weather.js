@@ -1,17 +1,19 @@
-import React from 'react';
-import moment from 'moment';
+// import '@geoapify/geocoder-autocomplete/styles/round-borders.css';
+import { GeoapifyContext, GeoapifyGeocoderAutocomplete } from '@geoapify/react-geocoder-autocomplete';
+import RefreshIcon from '@mui/icons-material/Refresh';
+import { CardHeader, Icon, IconButton, Skeleton, Input } from '@mui/material';
 import Card from '@mui/material/Card';
-import Typography from '@mui/material/Typography';
-import { CardHeader, Icon, IconButton } from '@mui/material';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import RefreshIcon from '@mui/icons-material/Refresh';
-import WbSunnyOutlinedIcon from '@mui/icons-material/WbSunnyOutlined';
-import { Skeleton } from '@mui/material';
-import { useState } from 'react';
+import Typography from '@mui/material/Typography';
+import moment from 'moment';
+import React, { useState, useEffect } from 'react';
 
 function Weather({forecast}){
     const [load, setLoad] = useState(false)
+    const [city, setCity] = useState(forecast.city.name)
+
+   
     return(
         <div>
             <Card
@@ -39,16 +41,22 @@ function Weather({forecast}){
                         height: '40vh',
                     }}
                 >
-                    <div style={{height: '11vh'}}>
+                    <div style={{height: '10vh'}}>
                         <img 
-                        onLoad={() => setLoad(true)}
-                        src={`${process.env.REACT_APP_ICON_URL}n/${forecast.list[0].weather[0].icon}@2x.png`}
-                        alt=''>
+                            onLoad={() => setLoad(true)}
+                            src={`${process.env.REACT_APP_ICON_URL}n/${forecast.list[0].weather[0].icon}@2x.png`}
+                            alt=''>
                         </img>
                         {!load && <Skeleton variant="circular" width={60} height={60}/>}
                     </div>
-                    
-                    <Typography>{forecast.city.name}</Typography>
+                    <GeoapifyContext apiKey="b4e536d8db6c45048d6caf8669fd7af2">
+                        <GeoapifyGeocoderAutocomplete
+                            placeholder='Enter City'
+                            value={city}
+                            limit={3}
+                            onUserInput={event => setCity(event.target.value)}
+                        />                        
+                    </GeoapifyContext>
                     <Typography variant="h2">{Math.ceil(forecast.list[0].main.temp)}&deg;C</Typography>
                     <Typography>{forecast.list[0].weather[0].description}</Typography>
                     <Typography>{moment().format('dddd')}</Typography>
@@ -60,3 +68,7 @@ function Weather({forecast}){
 }
 
 export default Weather;
+
+// <GeoapifyContext apiKey="YOUR_API_KEY_HERE">
+//   Your Geoapify Geocoder Autocomplete components go here
+// </GeoapifyContext>

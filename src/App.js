@@ -14,8 +14,7 @@ function App() {
     const [forecast, setForecast] = useState([]);
     
     useEffect(() => {
-        console.log(process.env.REACT_APP_DEBUG)
-        if(process.env.REACT_APP_DEBUG){    
+        if(process.env.REACT_APP_DEBUG === 'debug'){    
             const delay = () => {
                 setTimeout((() => setForecast(testContent)), 500)
             }
@@ -27,13 +26,15 @@ function App() {
                 setLat(position.coords.latitude);
                 setLon(position.coords.longitude);
             });
-            await fetch(`${process.env.REACT_APP_API_URL}/forecast?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_API_KEY}&units=metric`)
+            await fetch(`${process.env.REACT_APP_API_URL}/forecast?lat=${lat}&lon=${lon}&cnt=10&appid=${process.env.REACT_APP_API_KEY}&units=metric`)
                     .then(res => res.json())
                     .then(result => {
-                    setForecast(result)
+                        setForecast(result)
+                        console.log(result)
                     })
             }
             fetchData();
+            
         }
     }, [lat, lon])
     

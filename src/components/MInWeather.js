@@ -6,7 +6,6 @@ import { CardHeader, Icon, IconButton } from '@mui/material';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import RefreshIcon from '@mui/icons-material/Refresh';
-import WbSunnyOutlinedIcon from '@mui/icons-material/WbSunnyOutlined';
 import { useState } from 'react';
 import { Skeleton } from '@mui/material';
 
