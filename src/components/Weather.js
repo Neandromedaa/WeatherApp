@@ -1,19 +1,28 @@
 // import '@geoapify/geocoder-autocomplete/styles/round-borders.css';
 import { GeoapifyContext, GeoapifyGeocoderAutocomplete } from '@geoapify/react-geocoder-autocomplete';
 import RefreshIcon from '@mui/icons-material/Refresh';
-import { CardHeader, Icon, IconButton, Skeleton, Input } from '@mui/material';
+import { Skeleton } from '@mui/material';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import moment from 'moment';
 import React, { useState, useEffect } from 'react';
 
-function Weather({forecast}){
+function Weather({setLat, setLon, forecast}){
     const [load, setLoad] = useState(false)
     const [city, setCity] = useState(forecast.city.name)
+    // const [info, setInfo] = useState();
+  
+    function onPlaceSelect(value){
+        // setInfo(value);
+        if(value){
+            setLat(value.properties.lat)
+            setLon(value.properties.lon)
+            console.log(value.properties.lat);
+        }
+        
+    }
 
-   
     return(
         <div>
             <Card
@@ -54,7 +63,9 @@ function Weather({forecast}){
                             placeholder='Enter City'
                             value={city}
                             limit={3}
-                            onUserInput={event => setCity(event.target.value)}
+                            // onUserInput={event => setCity(event.target.value)}
+                            placeSelect={onPlaceSelect}
+                            debounceDelay={500}
                         />                        
                     </GeoapifyContext>
                     <Typography variant="h2">{Math.ceil(forecast.list[0].main.temp)}&deg;C</Typography>

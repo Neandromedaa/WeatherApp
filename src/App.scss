@@ -36,14 +36,24 @@ swiper-slide {
 
 .geoapify-autocomplete-input {
   padding: 0 31px 0 7px;
-  width: calc(100% - 40px);
-  outline: none;
-
+  // width: calc(100% - 40px);
+  // outline: none;
+  // background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  mix-blend-mode: darken;
   line-height: 36px;
   height: 36px;
-  border: 1px solid rgba(0, 0, 0, 0.3);
+  border: none;
+  border-bottom: 1px solid ;
+  // border: 1px solid rgba(0, 0, 0, 0.3);
+  // background-color: #b3e4ff;
+  // font-size: 14px;
 
-  font-size: 14px;
+  &:focus{
+    outline: none;
+  }
 }
 
 .geoapify-autocomplete-items {

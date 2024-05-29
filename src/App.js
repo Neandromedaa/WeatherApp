@@ -14,7 +14,14 @@ function App() {
     const [forecast, setForecast] = useState([]);
     
     useEffect(() => {
-        if(process.env.REACT_APP_DEBUG === 'debug'){    
+        navigator.geolocation.getCurrentPosition(position => {
+            setLat(position.coords.latitude);
+            setLon(position.coords.longitude);
+        });
+    }, []);
+
+    useEffect(() => {
+        if(!process.env.REACT_APP_DEBUG === 'debug'){    
             const delay = () => {
                 setTimeout((() => setForecast(testContent)), 500)
             }
@@ -22,23 +29,17 @@ function App() {
         } 
         else{
             const fetchData = async () => {
-            navigator.geolocation.getCurrentPosition(position => {
-                setLat(position.coords.latitude);
-                setLon(position.coords.longitude);
-            });
-            await fetch(`${process.env.REACT_APP_API_URL}/forecast?lat=${lat}&lon=${lon}&cnt=10&appid=${process.env.REACT_APP_API_KEY}&units=metric`)
-                    .then(res => res.json())
-                    .then(result => {
-                        setForecast(result)
-                        console.log(result)
-                    })
+                await fetch(`${process.env.REACT_APP_API_URL}/forecast?lat=${lat}&lon=${lon}&cnt=10&appid=${process.env.REACT_APP_API_KEY}&units=metric`)
+                        .then(res => res.json())
+                        .then(result => {
+                            setForecast(result)
+                            console.log(result)
+                        })
             }
             fetchData();
             
         }
     }, [lat, lon])
-    
-    
 
     return (
         <div className='main'>
@@ -47,7 +48,7 @@ function App() {
                 {(typeof forecast.city != 'undefined') ? (
                     <>
                         <div>
-                        <Weather forecast={forecast}/>
+                            <Weather setLat={setLat} setLon={setLon} forecast={forecast}/>
                         </div>
                         <swiper-container
                             pagination
