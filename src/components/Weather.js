@@ -6,21 +6,21 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import moment from 'moment';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { forecastContex } from './forecastContext';
+import Icon from './Icon';
 
-function Weather({setLat, setLon, forecast}){
-    const [load, setLoad] = useState(false)
+function Weather({setLat, setLon}){
+    const forecast = useContext(forecastContex);
     const [city, setCity] = useState(forecast.city.name)
-    // const [info, setInfo] = useState();
+    
   
     function onPlaceSelect(value){
-        // setInfo(value);
         if(value){
             setLat(value.properties.lat)
             setLon(value.properties.lon)
             console.log(value.properties.lat);
-        }
-        
+        }  
     }
 
     return(
@@ -50,15 +50,16 @@ function Weather({setLat, setLon, forecast}){
                         height: '40vh',
                     }}
                 >
-                    <div style={{height: '10vh'}}>
+                    <Icon/>
+                    {/* <div style={{height: '10vh'}}>
                         <img 
                             onLoad={() => setLoad(true)}
-                            src={`${process.env.REACT_APP_ICON_URL}n/${forecast.list[0].weather[0].icon}@2x.png`}
+                            src={`${process.env.REACT_APP_WEATHER_ICON_URL}n/${forecast.list[0].weather[0].icon}@2x.png`}
                             alt=''>
                         </img>
                         {!load && <Skeleton variant="circular" width={60} height={60}/>}
-                    </div>
-                    <GeoapifyContext apiKey="b4e536d8db6c45048d6caf8669fd7af2">
+                    </div> */}
+                    <GeoapifyContext apiKey={process.env.REACT_APP_AUTOFILL_API_KEY}>
                         <GeoapifyGeocoderAutocomplete
                             placeholder='Enter City'
                             value={city}
@@ -79,7 +80,3 @@ function Weather({setLat, setLon, forecast}){
 }
 
 export default Weather;
-
-// <GeoapifyContext apiKey="YOUR_API_KEY_HERE">
-//   Your Geoapify Geocoder Autocomplete components go here
-// </GeoapifyContext>

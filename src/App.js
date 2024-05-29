@@ -7,7 +7,10 @@ import CircularProgress from '@mui/material/CircularProgress';
 import MenuApp from './components/Menu';
 import { register } from 'swiper/element/bundle';
 import * as testContent from './data/forecast.json';
+import { useContext } from 'react';
+import { forecastContex } from './components/forecastContext';
 register();
+
 function App() {
     const [lat, setLat] = useState([]);
     const [lon, setLon] = useState([]);
@@ -29,7 +32,7 @@ function App() {
         } 
         else{
             const fetchData = async () => {
-                await fetch(`${process.env.REACT_APP_API_URL}/forecast?lat=${lat}&lon=${lon}&cnt=10&appid=${process.env.REACT_APP_API_KEY}&units=metric`)
+                await fetch(`${process.env.REACT_APP_WEATHER_API_URL}/forecast?lat=${lat}&lon=${lon}&cnt=10&appid=${process.env.REACT_APP_WEATHER_API_KEY}&units=metric`)
                         .then(res => res.json())
                         .then(result => {
                             setForecast(result)
@@ -47,24 +50,26 @@ function App() {
             <div className='App'>
                 {(typeof forecast.city != 'undefined') ? (
                     <>
-                        <div>
-                            <Weather setLat={setLat} setLon={setLon} forecast={forecast}/>
-                        </div>
-                        <swiper-container
-                            pagination
-                            slides-per-view={3}
-                            speed={400}
-                        >
-                            <MinWeather next={1} forecast={forecast}/>
-                            <MinWeather next={2} forecast={forecast}/>
-                            <MinWeather next={3} forecast={forecast}/>
-                            <MinWeather next={4} forecast={forecast}/>
-                            <MinWeather next={5} forecast={forecast}/>
-                            <MinWeather next={6} forecast={forecast}/>
-                            <MinWeather next={7} forecast={forecast}/>
-                            <MinWeather next={8} forecast={forecast}/>
-                            <MinWeather next={9} forecast={forecast}/>
-                        </swiper-container>
+                        <forecastContex.Provider value={forecast}>
+                            <div>
+                                <Weather setLat={setLat} setLon={setLon} forecast={forecast}/>
+                            </div>
+                            <swiper-container
+                                pagination
+                                slides-per-view={3}
+                                speed={400}
+                            >
+                                <MinWeather next={1} forecast={forecast}/>
+                                <MinWeather next={2} forecast={forecast}/>
+                                <MinWeather next={3} forecast={forecast}/>
+                                <MinWeather next={4} forecast={forecast}/>
+                                <MinWeather next={5} forecast={forecast}/>
+                                <MinWeather next={6} forecast={forecast}/>
+                                <MinWeather next={7} forecast={forecast}/>
+                                <MinWeather next={8} forecast={forecast}/>
+                                <MinWeather next={9} forecast={forecast}/>
+                            </swiper-container>
+                        </forecastContex.Provider>
                     </>
                 ): (
                 <div>

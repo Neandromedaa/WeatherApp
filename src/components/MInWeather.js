@@ -6,10 +6,12 @@ import { CardHeader, Icon, IconButton } from '@mui/material';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import RefreshIcon from '@mui/icons-material/Refresh';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Skeleton } from '@mui/material';
+import { forecastContex } from './forecastContext';
 
-function MinWeather({next, forecast}){
+function MinWeather({next}){
+    const forecast = useContext(forecastContex);
     const [load, setLoad] = useState(false)
     return(
             <swiper-slide>
@@ -40,7 +42,7 @@ function MinWeather({next, forecast}){
                         <div style={{height: '11vh'}}>
                             <img 
                                 onLoad={() => setLoad(true)}
-                                src={`${process.env.REACT_APP_ICON_URL}n/${forecast.list[next].weather[0].icon}@2x.png`}
+                                src={`${process.env.REACT_APP_WEATHER_ICON_URL}n/${forecast.list[next].weather[0].icon}@2x.png`}
                                 alt=''>
                             </img>
                             {!load && <Skeleton variant="circular" width={'10vw'} height={'10vw'}/>}
