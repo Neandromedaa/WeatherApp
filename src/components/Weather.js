@@ -8,18 +8,17 @@ import Typography from '@mui/material/Typography';
 import moment from 'moment';
 import React, { useState, useEffect, useContext } from 'react';
 import { forecastContex } from './forecastContext';
-import Icon from './Icon';
 
-function Weather({setLat, setLon}){
+function Weather({setLat, setLon, setIcon}){
     const forecast = useContext(forecastContex);
-    const [city, setCity] = useState(forecast.city.name)
+    const [city, setCity] = useState(forecast.forecast.city.name)
     
-  
     function onPlaceSelect(value){
         if(value){
+            setIcon('')
+            forecast.setLoad(false)
             setLat(value.properties.lat)
             setLon(value.properties.lon)
-            console.log(value.properties.lat);
         }  
     }
 
@@ -50,27 +49,26 @@ function Weather({setLat, setLon}){
                         height: '40vh',
                     }}
                 >
-                    <Icon/>
-                    {/* <div style={{height: '10vh'}}>
+                    <div style={{height: '10vh'}}>
                         <img 
-                            onLoad={() => setLoad(true)}
-                            src={`${process.env.REACT_APP_WEATHER_ICON_URL}n/${forecast.list[0].weather[0].icon}@2x.png`}
+                            onLoad={() => forecast.setLoad(true)}
+                            src={forecast.icon}
                             alt=''>
                         </img>
-                        {!load && <Skeleton variant="circular" width={60} height={60}/>}
-                    </div> */}
+                        {!forecast.load && <Skeleton variant="circular" width={60} height={60}/>}
+                    </div>
+                    
                     <GeoapifyContext apiKey={process.env.REACT_APP_AUTOFILL_API_KEY}>
                         <GeoapifyGeocoderAutocomplete
                             placeholder='Enter City'
                             value={city}
                             limit={3}
-                            // onUserInput={event => setCity(event.target.value)}
                             placeSelect={onPlaceSelect}
                             debounceDelay={500}
                         />                        
                     </GeoapifyContext>
-                    <Typography variant="h2">{Math.ceil(forecast.list[0].main.temp)}&deg;C</Typography>
-                    <Typography>{forecast.list[0].weather[0].description}</Typography>
+                    <Typography variant="h2">{Math.ceil(forecast.forecast.list[0].main.temp)}&deg;C</Typography>
+                    <Typography>{forecast.forecast.list[0].weather[0].description}</Typography>
                     <Typography>{moment().format('dddd')}</Typography>
                     <Typography>{moment().format('LL')}</Typography>
                 </CardContent>

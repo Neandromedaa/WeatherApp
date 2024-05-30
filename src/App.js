@@ -7,14 +7,24 @@ import CircularProgress from '@mui/material/CircularProgress';
 import MenuApp from './components/Menu';
 import { register } from 'swiper/element/bundle';
 import * as testContent from './data/forecast.json';
-import { useContext } from 'react';
+import { useContext, useMemo } from 'react';
 import { forecastContex } from './components/forecastContext';
+// import { cardLoadContext } from './components/cardLoadContext';
 register();
 
 function App() {
     const [lat, setLat] = useState([]);
     const [lon, setLon] = useState([]);
     const [forecast, setForecast] = useState([]);
+    const [icon, setIcon] = useState('');
+    const [load, setLoad] = useState(false);
+
+    const cardLoadValue = useMemo(() => ({
+        load,
+        setLoad,
+        forecast,
+        icon
+      }), [load, setLoad, forecast, icon]);
     
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(position => {
@@ -35,12 +45,13 @@ function App() {
                 await fetch(`${process.env.REACT_APP_WEATHER_API_URL}/forecast?lat=${lat}&lon=${lon}&cnt=10&appid=${process.env.REACT_APP_WEATHER_API_KEY}&units=metric`)
                         .then(res => res.json())
                         .then(result => {
-                            setForecast(result)
-                            console.log(result)
+                            if(result.cod === '200'){
+                                setForecast(result);
+                                setIcon(`${process.env.REACT_APP_WEATHER_ICON_URL}n/${result.list[0].weather[0].icon}@2x.png`)
+                            }
                         })
             }
             fetchData();
-            
         }
     }, [lat, lon])
 
@@ -50,24 +61,24 @@ function App() {
             <div className='App'>
                 {(typeof forecast.city != 'undefined') ? (
                     <>
-                        <forecastContex.Provider value={forecast}>
+                        <forecastContex.Provider value={cardLoadValue}>
                             <div>
-                                <Weather setLat={setLat} setLon={setLon} forecast={forecast}/>
+                                <Weather setLat={setLat} setLon={setLon} setIcon={setIcon}/>
                             </div>
                             <swiper-container
                                 pagination
                                 slides-per-view={3}
                                 speed={400}
                             >
-                                <MinWeather next={1} forecast={forecast}/>
-                                <MinWeather next={2} forecast={forecast}/>
-                                <MinWeather next={3} forecast={forecast}/>
-                                <MinWeather next={4} forecast={forecast}/>
-                                <MinWeather next={5} forecast={forecast}/>
-                                <MinWeather next={6} forecast={forecast}/>
-                                <MinWeather next={7} forecast={forecast}/>
-                                <MinWeather next={8} forecast={forecast}/>
-                                <MinWeather next={9} forecast={forecast}/>
+                                <MinWeather next={1}/>
+                                <MinWeather next={2}/>
+                                <MinWeather next={3}/>
+                                <MinWeather next={4}/>
+                                <MinWeather next={5}/>
+                                <MinWeather next={6}/>
+                                <MinWeather next={7}/>
+                                <MinWeather next={8}/>
+                                <MinWeather next={9}/>
                             </swiper-container>
                         </forecastContex.Provider>
                     </>

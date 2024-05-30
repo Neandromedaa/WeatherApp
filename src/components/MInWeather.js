@@ -12,7 +12,7 @@ import { forecastContex } from './forecastContext';
 
 function MinWeather({next}){
     const forecast = useContext(forecastContex);
-    const [load, setLoad] = useState(false)
+    // const [load, setLoad] = useState(false)
     return(
             <swiper-slide>
                 <Card
@@ -41,13 +41,13 @@ function MinWeather({next}){
                     >
                         <div style={{height: '11vh'}}>
                             <img 
-                                onLoad={() => setLoad(true)}
-                                src={`${process.env.REACT_APP_WEATHER_ICON_URL}n/${forecast.list[next].weather[0].icon}@2x.png`}
+                                onLoad={() => forecast.setLoad(true)}
+                                src={forecast.icon}
                                 alt=''>
                             </img>
-                            {!load && <Skeleton variant="circular" width={'10vw'} height={'10vw'}/>}
+                            {!forecast.load && <Skeleton variant="circular" width={'10vw'} height={'10vw'}/>}
                         </div>
-                        <Typography variant="h4">{Math.ceil(forecast.list[next].main.temp)}&deg;C</Typography>
+                        <Typography variant="h4">{Math.ceil(forecast.forecast.list[next].main.temp)}&deg;C</Typography>
                         <Typography>{moment().add(next, 'days').format('dddd')}</Typography>
                     </CardContent>
                 </Card>
