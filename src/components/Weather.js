@@ -14,7 +14,7 @@ function Weather({setLat, setLon, setIcon}){
     
     function onPlaceSelect(value){
         if(value){
-            setIcon('')
+            // setIcon('')
             forecast.setLoadWeather(false);
             forecast.setLoadIcon(false);
             setLat(value.properties.lat);
@@ -52,7 +52,7 @@ function Weather({setLat, setLon, setIcon}){
                     <div style={{height: '10vh'}}>
                         <img 
                             onLoad={() => forecast.setLoadIcon(true)}
-                            src={forecast.icon}
+                            src={forecast.loadWeather ? `${process.env.REACT_APP_WEATHER_ICON_URL}n/${forecast.forecast.list[0].weather[0].icon}@2x.png` : ''}
                             alt=''>
                         </img>
                         {!forecast.loadIcon && <Skeleton variant="circular" width={60} height={60}/>}
@@ -64,7 +64,7 @@ function Weather({setLat, setLon, setIcon}){
                             limit={3}
                             placeSelect={onPlaceSelect}
                             debounceDelay={500}
-                        />                        
+                        />    
                     </GeoapifyContext>
                     <div style={{display: 'flex', alignItems: 'center', flexFlow: 'column', height: '10vh'}}>
                         <Typography variant="h2">{forecast.loadWeather ? Math.ceil(forecast.forecast.list[0].main.temp) + String.fromCharCode(176) + 'C' : <Skeleton width={90}/>}</Typography>

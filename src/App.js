@@ -51,7 +51,7 @@ function App() {
                             if(result.cod === '200'){
                                 setForecast(result);
                                 setLoadWeather(true);
-                                setIcon(`${process.env.REACT_APP_WEATHER_ICON_URL}n/${result.list[0].weather[0].icon}@2x.png`)
+                                // setIcon(`${process.env.REACT_APP_WEATHER_ICON_URL}n/${result.list[0].weather[0].icon}@2x.png`)
                             }
                         })
             }
