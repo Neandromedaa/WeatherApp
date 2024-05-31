@@ -2,17 +2,14 @@ import React from 'react';
 import moment from 'moment';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
-import { CardHeader, Icon, IconButton } from '@mui/material';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import RefreshIcon from '@mui/icons-material/Refresh';
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
 import { Skeleton } from '@mui/material';
 import { forecastContex } from './forecastContext';
 
 function MinWeather({next}){
     const forecast = useContext(forecastContex);
-    // const [load, setLoad] = useState(false)
+
     return(
             <swiper-slide>
                 <Card
@@ -41,13 +38,13 @@ function MinWeather({next}){
                     >
                         <div style={{height: '11vh'}}>
                             <img 
-                                onLoad={() => forecast.setLoad(true)}
+                                onLoad={() => forecast.setLoadIcon(true)}
                                 src={forecast.icon}
                                 alt=''>
                             </img>
-                            {!forecast.load && <Skeleton variant="circular" width={'10vw'} height={'10vw'}/>}
+                            {!forecast.loadIcon && <Skeleton variant="circular" width={'12vw'} height={'12vw'}/>}
                         </div>
-                        <Typography variant="h4">{Math.ceil(forecast.forecast.list[next].main.temp)}&deg;C</Typography>
+                        <Typography variant="h4">{forecast.loadWeather ? Math.ceil(forecast.forecast.list[next].main.temp) + String.fromCharCode(176) + 'C' : <Skeleton width={90}/>}</Typography>
                         <Typography>{moment().add(next, 'days').format('dddd')}</Typography>
                     </CardContent>
                 </Card>

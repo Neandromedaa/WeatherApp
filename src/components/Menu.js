@@ -33,8 +33,6 @@ function MenuApp(){
           'aria-labelledby': 'basic-button',
         }}
         >
-            <MenuItem onClick={handleClose}>Enter City</MenuItem>
-            <MenuItem onClick={handleClose}>Random Place</MenuItem>
             <MenuItem onClick={handleClose}>Soon...</MenuItem>
         </Menu>
         </div>

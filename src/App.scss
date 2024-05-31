@@ -30,15 +30,8 @@ swiper-slide {
   justify-content: center;
 }
 
-
-
-
-
 .geoapify-autocomplete-input {
   padding: 0 31px 0 7px;
-  // width: calc(100% - 40px);
-  // outline: none;
-  // background-color: #ffffff;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -47,9 +40,6 @@ swiper-slide {
   height: 36px;
   border: none;
   border-bottom: 1px solid ;
-  // border: 1px solid rgba(0, 0, 0, 0.3);
-  // background-color: #b3e4ff;
-  // font-size: 14px;
 
   &:focus{
     outline: none;
@@ -61,7 +51,6 @@ swiper-slide {
   border: 1px solid rgba(0, 0, 0, 0.3);
   border-top: none;
   background-color: #fff;
-  
   z-index: 99;
   top: 100%;
   left: 0;

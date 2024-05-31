@@ -7,24 +7,27 @@ import CircularProgress from '@mui/material/CircularProgress';
 import MenuApp from './components/Menu';
 import { register } from 'swiper/element/bundle';
 import * as testContent from './data/forecast.json';
-import { useContext, useMemo } from 'react';
+import { useMemo } from 'react';
 import { forecastContex } from './components/forecastContext';
-// import { cardLoadContext } from './components/cardLoadContext';
 register();
 
 function App() {
     const [lat, setLat] = useState([]);
     const [lon, setLon] = useState([]);
+
     const [forecast, setForecast] = useState([]);
     const [icon, setIcon] = useState('');
-    const [load, setLoad] = useState(false);
+    const [loadIcon, setLoadIcon] = useState(false);
+    const [loadWeather, setLoadWeather] = useState(false); 
 
     const cardLoadValue = useMemo(() => ({
-        load,
-        setLoad,
+        loadIcon,
+        setLoadIcon,
         forecast,
-        icon
-      }), [load, setLoad, forecast, icon]);
+        icon,
+        loadWeather,
+        setLoadWeather,
+      }), [loadIcon, setLoadIcon, forecast, icon, loadWeather, setLoadWeather]);
     
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(position => {
@@ -47,6 +50,7 @@ function App() {
                         .then(result => {
                             if(result.cod === '200'){
                                 setForecast(result);
+                                setLoadWeather(true);
                                 setIcon(`${process.env.REACT_APP_WEATHER_ICON_URL}n/${result.list[0].weather[0].icon}@2x.png`)
                             }
                         })

@@ -1,4 +1,3 @@
-// import '@geoapify/geocoder-autocomplete/styles/round-borders.css';
 import { GeoapifyContext, GeoapifyGeocoderAutocomplete } from '@geoapify/react-geocoder-autocomplete';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { Skeleton } from '@mui/material';
@@ -6,7 +5,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import moment from 'moment';
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { forecastContex } from './forecastContext';
 
 function Weather({setLat, setLon, setIcon}){
@@ -16,9 +15,10 @@ function Weather({setLat, setLon, setIcon}){
     function onPlaceSelect(value){
         if(value){
             setIcon('')
-            forecast.setLoad(false)
-            setLat(value.properties.lat)
-            setLon(value.properties.lon)
+            forecast.setLoadWeather(false);
+            forecast.setLoadIcon(false);
+            setLat(value.properties.lat);
+            setLon(value.properties.lon);
         }  
     }
 
@@ -51,13 +51,12 @@ function Weather({setLat, setLon, setIcon}){
                 >
                     <div style={{height: '10vh'}}>
                         <img 
-                            onLoad={() => forecast.setLoad(true)}
+                            onLoad={() => forecast.setLoadIcon(true)}
                             src={forecast.icon}
                             alt=''>
                         </img>
-                        {!forecast.load && <Skeleton variant="circular" width={60} height={60}/>}
+                        {!forecast.loadIcon && <Skeleton variant="circular" width={60} height={60}/>}
                     </div>
-                    
                     <GeoapifyContext apiKey={process.env.REACT_APP_AUTOFILL_API_KEY}>
                         <GeoapifyGeocoderAutocomplete
                             placeholder='Enter City'
@@ -67,8 +66,10 @@ function Weather({setLat, setLon, setIcon}){
                             debounceDelay={500}
                         />                        
                     </GeoapifyContext>
-                    <Typography variant="h2">{Math.ceil(forecast.forecast.list[0].main.temp)}&deg;C</Typography>
-                    <Typography>{forecast.forecast.list[0].weather[0].description}</Typography>
+                    <div style={{display: 'flex', alignItems: 'center', flexFlow: 'column', height: '10vh'}}>
+                        <Typography variant="h2">{forecast.loadWeather ? Math.ceil(forecast.forecast.list[0].main.temp) + String.fromCharCode(176) + 'C' : <Skeleton width={90}/>}</Typography>
+                        <Typography>{forecast.loadWeather ? forecast.forecast.list[0].weather[0].description : <Skeleton width={80}/>}</Typography>
+                    </div>
                     <Typography>{moment().format('dddd')}</Typography>
                     <Typography>{moment().format('LL')}</Typography>
                 </CardContent>
