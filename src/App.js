@@ -17,17 +17,14 @@ function App() {
 
     const [forecast, setForecast] = useState([]);
     const [icon, setIcon] = useState('');
-    const [loadIcon, setLoadIcon] = useState(false);
     const [loadWeather, setLoadWeather] = useState(false); 
 
     const cardLoadValue = useMemo(() => ({
-        loadIcon,
-        setLoadIcon,
         forecast,
         icon,
         loadWeather,
         setLoadWeather,
-      }), [loadIcon, setLoadIcon, forecast, icon, loadWeather, setLoadWeather]);
+      }), [forecast, icon, loadWeather, setLoadWeather]);
     
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(position => {
@@ -51,7 +48,6 @@ function App() {
                             if(result.cod === '200'){
                                 setForecast(result);
                                 setLoadWeather(true);
-                                // setIcon(`${process.env.REACT_APP_WEATHER_ICON_URL}n/${result.list[0].weather[0].icon}@2x.png`)
                             }
                         })
             }
@@ -67,7 +63,7 @@ function App() {
                     <>
                         <forecastContex.Provider value={cardLoadValue}>
                             <div>
-                                <Weather setLat={setLat} setLon={setLon} setIcon={setIcon}/>
+                                <Weather lat={lat} lon={lon} setLat={setLat} setLon={setLon} setIcon={setIcon}/>
                             </div>
                             <swiper-container
                                 pagination

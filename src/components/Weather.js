@@ -8,17 +8,19 @@ import moment from 'moment';
 import React, { useState, useContext } from 'react';
 import { forecastContex } from './forecastContext';
 
-function Weather({setLat, setLon, setIcon}){
+function Weather({lat, lon, setLat, setLon}){
     const forecast = useContext(forecastContex);
     const [city, setCity] = useState(forecast.forecast.city.name)
-    
+    const [loadIcon, setLoadIcon] = useState(false);
+
     function onPlaceSelect(value){
         if(value){
-            // setIcon('')
-            forecast.setLoadWeather(false);
-            forecast.setLoadIcon(false);
-            setLat(value.properties.lat);
-            setLon(value.properties.lon);
+            if(lat !== value.properties.lat || lon !== value.properties.lon){
+                forecast.setLoadWeather(false);
+                setLoadIcon(false);
+                setLat(value.properties.lat);
+                setLon(value.properties.lon);
+            }
         }  
     }
 
@@ -51,11 +53,11 @@ function Weather({setLat, setLon, setIcon}){
                 >
                     <div style={{height: '10vh'}}>
                         <img 
-                            onLoad={() => forecast.setLoadIcon(true)}
+                            onLoad={() => setLoadIcon(true)}
                             src={forecast.loadWeather ? `${process.env.REACT_APP_WEATHER_ICON_URL}n/${forecast.forecast.list[0].weather[0].icon}@2x.png` : ''}
                             alt=''>
                         </img>
-                        {!forecast.loadIcon && <Skeleton variant="circular" width={60} height={60}/>}
+                        {!loadIcon && <Skeleton variant="circular" width={60} height={60}/>}
                     </div>
                     <GeoapifyContext apiKey={process.env.REACT_APP_AUTOFILL_API_KEY}>
                         <GeoapifyGeocoderAutocomplete
