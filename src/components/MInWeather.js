@@ -28,30 +28,19 @@ function MinWeather({next}){
                         flexFlow: 'column',
                         alignItems: 'center',
                         justifyContent: 'center',
+                        backgroundColor: '#b3e4ff',
                     }}
                 >
-                    <CardContent 
-                        sx={{
-                            display: 'flex',
-                            flexFlow: 'column',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            backgroundColor: '#b3e4ff',
-                            width: "min(30vw, 150px)",
-                            height: '22vh'
-                        }}
-                    >
-                        <div style={{height: '11vh'}}>
-                            <img 
-                                onLoad={() => setLoadIcon(true)}
-                                src={forecast.loadWeather ? `${process.env.REACT_APP_WEATHER_ICON_URL}n/${forecast.forecast.list[next].weather[0].icon}@2x.png` : ''}
-                                alt=''>
-                            </img>
-                            {!loadIcon && <Skeleton variant="circular" width={'12vw'} height={'12vw'}/>}
-                        </div>
-                        <Typography variant="h4">{forecast.loadWeather ? Math.ceil(forecast.forecast.list[next].main.temp) + String.fromCharCode(176) + 'C' : <Skeleton width={90}/>}</Typography>
-                        <Typography>{moment().add(next, 'days').format('dddd')}</Typography>
-                    </CardContent>
+                    <div style={{height: '11vh'}}>
+                        <img 
+                            onLoad={() => setLoadIcon(true)}
+                            src={forecast.loadWeather ? `${process.env.REACT_APP_WEATHER_ICON_URL}n/${forecast.forecast.list[next].weather[0].icon}@2x.png` : ''}
+                            alt=''>
+                        </img>
+                        {!loadIcon && <Skeleton variant="circular" width={'12vw'} height={'12vw'}/>}
+                    </div>
+                    <Typography variant="h4">{forecast.loadWeather ? Math.ceil(forecast.forecast.list[next].main.temp) + String.fromCharCode(176) + 'C' : <Skeleton width={90}/>}</Typography>
+                    <Typography>{moment().add(next, 'days').format('dddd')}</Typography>
                 </Card>
             </swiper-slide>
     );

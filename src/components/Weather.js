@@ -37,44 +37,34 @@ function Weather({lat, lon, setLat, setLon}){
                     flexFlow: 'column',
                     alignItems: 'center',
                     justifyContent: 'center',
+                    backgroundColor: '#b3e4ff',
+                    gap: 1,
+                    overflow: 'visible'
                 }}
             >
-                <CardContent 
-                    sx={{
-                        display: 'flex',
-                        flexFlow: 'column',
-                        alignItems: 'center',
-                        gap: 1,
-                        justifyContent: 'center',
-                        backgroundColor: '#b3e4ff',
-                        width: "min(60vw, 300px)",
-                        height: '40vh',
-                    }}
-                >
-                    <div style={{height: '10vh'}}>
-                        <img 
-                            onLoad={() => setLoadIcon(true)}
-                            src={forecast.loadWeather ? `${process.env.REACT_APP_WEATHER_ICON_URL}n/${forecast.forecast.list[0].weather[0].icon}@2x.png` : ''}
-                            alt=''>
-                        </img>
-                        {!loadIcon && <Skeleton variant="circular" width={60} height={60}/>}
-                    </div>
-                    <GeoapifyContext apiKey={process.env.REACT_APP_AUTOFILL_API_KEY}>
-                        <GeoapifyGeocoderAutocomplete
-                            placeholder='Enter City'
-                            value={city}
-                            limit={3}
-                            placeSelect={onPlaceSelect}
-                            debounceDelay={500}
-                        />    
-                    </GeoapifyContext>
-                    <div style={{display: 'flex', alignItems: 'center', flexFlow: 'column', height: '10vh'}}>
-                        <Typography variant="h2">{forecast.loadWeather ? Math.ceil(forecast.forecast.list[0].main.temp) + String.fromCharCode(176) + 'C' : <Skeleton width={90}/>}</Typography>
-                        <Typography>{forecast.loadWeather ? forecast.forecast.list[0].weather[0].description : <Skeleton width={80}/>}</Typography>
-                    </div>
-                    <Typography>{moment().format('dddd')}</Typography>
-                    <Typography>{moment().format('LL')}</Typography>
-                </CardContent>
+                <div style={{height: '10vh'}}>
+                    <img 
+                        onLoad={() => setLoadIcon(true)}
+                        src={forecast.loadWeather ? `${process.env.REACT_APP_WEATHER_ICON_URL}n/${forecast.forecast.list[0].weather[0].icon}@2x.png` : ''}
+                        alt=''>
+                    </img>
+                    {!loadIcon && <Skeleton variant="circular" width={60} height={60}/>}
+                </div>
+                <GeoapifyContext apiKey={process.env.REACT_APP_AUTOFILL_API_KEY}>
+                    <GeoapifyGeocoderAutocomplete
+                        placeholder='Enter City'
+                        value={city}
+                        limit={5}
+                        placeSelect={onPlaceSelect}
+                        debounceDelay={500}
+                    />    
+                </GeoapifyContext>
+                <div style={{display: 'flex', alignItems: 'center', flexFlow: 'column', height: '10vh'}}>
+                    <Typography variant="h2">{forecast.loadWeather ? Math.ceil(forecast.forecast.list[0].main.temp) + String.fromCharCode(176) + 'C' : <Skeleton width={90}/>}</Typography>
+                    <Typography>{forecast.loadWeather ? forecast.forecast.list[0].weather[0].description : <Skeleton width={80}/>}</Typography>
+                </div>
+                <Typography>{moment().format('dddd')}</Typography>
+                <Typography>{moment().format('LL')}</Typography>
             </Card>
         </div> 
     );
