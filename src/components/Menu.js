@@ -1,18 +1,25 @@
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
+import Toggle from 'react-toggle';
+import "react-toggle/style.css"
+import { forecastContex } from './forecastContext';
 
 function MenuApp(){
+    const forecast = useContext(forecastContex);
     const [anchorEl, setAnchorEl] = useState(null);
+
     const open = Boolean(anchorEl);
+    
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
     const handleClose = () => {
         setAnchorEl(null);
     };
+
     return(
         <div className='menu'>
           <Button
@@ -33,6 +40,17 @@ function MenuApp(){
           'aria-labelledby': 'basic-button',
         }}
         >
+            <MenuItem>
+                <Toggle
+                    checked={forecast.metric === 'C' ? false : true}
+                    onChange={() => forecast.setMetric(forecast.metric === 'C' ? 'F' : 'C')}
+                    className='metricToggler'
+                    icons={{
+                        checked: 'C',
+                        unchecked: 'F',
+                        }}
+                />
+            </MenuItem>
             <MenuItem onClick={handleClose}>Soon...</MenuItem>
         </Menu>
         </div>

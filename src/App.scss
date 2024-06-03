@@ -122,4 +122,28 @@ swiper-slide {
   color: rgba(0, 0, 0, 0.6);
 }
 
+.metricToggler.react-toggle:hover:not(.react-toggle--disabled) .react-toggle-track {
+  background-color: #68c4f5;
+}
 
+.metricToggler.react-toggle--checked .react-toggle-track {
+  background-color: #68c4f5;
+}
+
+.metricToggler.react-toggle--checked:hover:not(.react-toggle--disabled) .react-toggle-track {
+  background-color: #68c4f5;
+}
+
+.metricToggler .react-toggle-track-check {
+  color: #fff;
+  top: 7px;
+}
+
+.metricToggler .react-toggle-track-x {
+  top: 7px;
+  color: #fff;
+}
+
+.metricToggler .react-toggle-track {
+  background-color: #68c4f5;
+}

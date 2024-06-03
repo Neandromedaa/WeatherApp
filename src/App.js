@@ -14,17 +14,18 @@ register();
 function App() {
     const [lat, setLat] = useState([]);
     const [lon, setLon] = useState([]);
-
     const [forecast, setForecast] = useState([]);
-    const [icon, setIcon] = useState('');
-    const [loadWeather, setLoadWeather] = useState(false); 
+    const [metric, setMetric] = useState('C');
+    const [loadWeather, setLoadWeather] = useState(false);
+
 
     const cardLoadValue = useMemo(() => ({
+        metric,
+        setMetric,
         forecast,
-        icon,
         loadWeather,
         setLoadWeather,
-      }), [forecast, icon, loadWeather, setLoadWeather]);
+      }), [metric, setMetric, forecast, loadWeather, setLoadWeather]);
     
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(position => {
@@ -34,9 +35,10 @@ function App() {
     }, []);
 
     useEffect(() => {
-        if(!process.env.REACT_APP_DEBUG === 'debug'){    
+        if(process.env.REACT_APP_DEBUG === 'debug'){    
             const delay = () => {
-                setTimeout((() => setForecast(testContent)), 500)
+                setTimeout((() => setForecast(testContent)), 500);
+                setLoadWeather(true);
             }
             delay();
         } 
@@ -57,13 +59,13 @@ function App() {
 
     return (
         <div className='main'>
-            <MenuApp />
+            <MenuApp/>
             <div className='App'>
                 {(typeof forecast.city != 'undefined') ? (
                     <>
                         <forecastContex.Provider value={cardLoadValue}>
                             <div>
-                                <Weather lat={lat} lon={lon} setLat={setLat} setLon={setLon} setIcon={setIcon}/>
+                                <Weather lat={lat} lon={lon} setLat={setLat} setLon={setLon}/>
                             </div>
                             <swiper-container
                                 pagination
