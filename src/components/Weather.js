@@ -2,7 +2,6 @@ import { GeoapifyContext, GeoapifyGeocoderAutocomplete } from '@geoapify/react-g
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { Skeleton } from '@mui/material';
 import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import moment from 'moment';
 import React, { useState, useContext } from 'react';

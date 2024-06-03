@@ -35,7 +35,7 @@ function App() {
     }, []);
 
     useEffect(() => {
-        if(process.env.REACT_APP_DEBUG === 'debug'){    
+        if(!process.env.REACT_APP_DEBUG === 'debug'){    
             const delay = () => {
                 setTimeout((() => setForecast(testContent)), 500);
                 setLoadWeather(true);
