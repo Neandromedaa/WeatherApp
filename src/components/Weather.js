@@ -60,7 +60,9 @@ function Weather({lat, lon, setLat, setLon}){
                     />    
                 </GeoapifyContext>
                 <div style={{display: 'flex', alignItems: 'center', flexFlow: 'column', height: '10vh'}}>
-                    <Typography variant="h2">{forecast.loadWeather ? Math.ceil(forecast.forecast.list[0].main.temp) + String.fromCharCode(176) + 'C' : <Skeleton width={90}/>}</Typography>
+                    <Typography variant="h2">
+                        {forecast.loadWeather ? Math.ceil(forecast.forecast.list[0].main.temp) + String.fromCharCode(176) + forecast.metric : <Skeleton width={90}/>}
+                    </Typography>
                     <Typography>{forecast.loadWeather ? forecast.forecast.list[0].weather[0].description : <Skeleton width={80}/>}</Typography>
                 </div>
                 <Typography>{moment().format('dddd')}</Typography>

@@ -12,7 +12,7 @@ function MenuApp(){
     const [anchorEl, setAnchorEl] = useState(null);
 
     const open = Boolean(anchorEl);
-    
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -42,7 +42,7 @@ function MenuApp(){
         >
             <MenuItem>
                 <Toggle
-                    checked={forecast.metric === 'C' ? false : true}
+                    checked={forecast.metric === 'C' ? true : false}
                     onChange={() => forecast.setMetric(forecast.metric === 'C' ? 'F' : 'C')}
                     className='metricToggler'
                     icons={{

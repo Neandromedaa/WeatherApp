@@ -59,11 +59,11 @@ function App() {
 
     return (
         <div className='main'>
-            <MenuApp/>
-            <div className='App'>
-                {(typeof forecast.city != 'undefined') ? (
-                    <>
-                        <forecastContex.Provider value={cardLoadValue}>
+            <forecastContex.Provider value={cardLoadValue}>
+                <MenuApp/>
+                <div className='App'>
+                    {(typeof forecast.city != 'undefined') ? (
+                        <>
                             <div>
                                 <Weather lat={lat} lon={lon} setLat={setLat} setLon={setLon}/>
                             </div>
@@ -82,16 +82,16 @@ function App() {
                                 <MinWeather next={8}/>
                                 <MinWeather next={9}/>
                             </swiper-container>
-                        </forecastContex.Provider>
-                    </>
-                ): (
-                <div>
-                    <Backdrop open style={{'backgroundColor': '#20648a'}}>
-                        <CircularProgress style={{'color': '#dfeaf0'}}/>
-                    </Backdrop>
+                        </>
+                    ): (
+                    <div>
+                        <Backdrop open style={{'backgroundColor': '#20648a'}}>
+                            <CircularProgress style={{'color': '#dfeaf0'}}/>
+                        </Backdrop>
+                    </div>
+                    )}
                 </div>
-                )}
-            </div>
+            </forecastContex.Provider>
         </div>
     );
 }
