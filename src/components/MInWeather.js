@@ -39,7 +39,11 @@ function MinWeather({next}){
                         </img>
                         {!loadIcon && <Skeleton variant="circular" width={'12vw'} height={'12vw'}/>}
                     </div>
-                    <Typography variant="h4">{forecast.loadWeather ? Math.ceil(forecast.forecast.list[next].main.temp) + String.fromCharCode(176) + forecast.metric : <Skeleton width={90}/>}</Typography>
+                    <Typography variant="h4">
+                        {forecast.loadWeather ? 
+                        Math.round(forecast.metric === 'C' ? forecast.forecast.list[next].main.temp : forecast.forecast.list[next].main.temp * 9/5 + 32) + String.fromCharCode(176) + forecast.metric 
+                        : <Skeleton width={90}/>}
+                        </Typography>
                     <Typography>{moment().add(next, 'days').format('dddd')}</Typography>
                 </Card>
             </swiper-slide>

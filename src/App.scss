@@ -136,14 +136,18 @@ swiper-slide {
 
 .metricToggler .react-toggle-track-check {
   color: #fff;
-  top: 7px;
+  top: 11.5px;
 }
 
 .metricToggler .react-toggle-track-x {
-  top: 7px;
+  top: 11.5px;
   color: #fff;
 }
 
 .metricToggler .react-toggle-track {
   background-color: #68c4f5;
+}
+
+.metricToggler.react-toggle--checked .react-toggle-thumb {
+  border-color: #4D4D4D
 }
