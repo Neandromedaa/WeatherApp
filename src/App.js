@@ -18,7 +18,6 @@ function App() {
     const [metric, setMetric] = useState('C');
     const [loadWeather, setLoadWeather] = useState(false);
 
-
     const cardLoadValue = useMemo(() => ({
         metric,
         setMetric,
@@ -62,7 +61,7 @@ function App() {
             <forecastContex.Provider value={cardLoadValue}>
                 <MenuApp/>
                 <div className='App'>
-                    {(typeof forecast.city != 'undefined') ? (
+                    {forecast.city ? (
                         <>
                             <div>
                                 <Weather lat={lat} lon={lon} setLat={setLat} setLon={setLon}/>

@@ -13,15 +13,13 @@ function Weather({lat, lon, setLat, setLon}){
     const [loadIcon, setLoadIcon] = useState(false);
 
     function onPlaceSelect(value){
-        if(value){
-            if(lat !== value.properties.lat || lon !== value.properties.lon){
+        if(value && (lat !== value.properties.lat || lon !== value.properties.lon)){
                 forecast.setLoadWeather(false);
                 setLoadIcon(false);
                 setLat(value.properties.lat);
                 setLon(value.properties.lon);
             }
-        }  
-    }
+        }
 
     return(
         <div>
