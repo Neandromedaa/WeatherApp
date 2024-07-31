@@ -37,7 +37,7 @@ function MinWeather({next}){
                             src={forecast.loadWeather ? `${process.env.REACT_APP_WEATHER_ICON_URL}n/${forecast.forecast.list[next].weather[0].icon}@2x.png` : ''}
                             alt=''>
                         </img>
-                        {!loadIcon && <Skeleton variant="circular" width={'12vw'} height={'12vw'}/>}
+                        {!loadIcon && <Skeleton variant="circular" width={60} height={60}/>}
                     </div>
                     <Typography variant="h4">
                         {forecast.loadWeather ? 
